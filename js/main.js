@@ -11,7 +11,7 @@ console.log("main script working");
 
 // My first idea was using the gameCellsIds array and replace the array elements (each cell)
 /*Added to keep track of the updated cells*/
-let board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"]
+let board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
 
 // Array(9) [ "cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8" ]
 
@@ -27,21 +27,18 @@ let board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6
 // Cells are object because, well, OOP, but still very green
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-class Cell {
-  constructor(usedCell, position, player) {
-    this.UsedCell = usedCell;
-    this.position = position;
+class Player {
+  constructor(player, playerSymbol) {
     this.player = player;
+    this.symbol = playerSymbol;
   }
-  makeMove() {
-    console.log(`A new piece was put on square ${this.position} by ${this.player}`);
-    /*Added this to update the baord array when new cells are clicked*/
-    board[board.findIndex(element => element === `cell-${this.position}`)] = this.player;
-    console.log (`This is the board ${board}`)
+  createCell(bool, cellNumber, player, playerSymbol) {
+    console.log(`A new piece was put on square ${cellNumber} by ${this.player} with the ${this.symbol} symbol`);
+    //     /*Added this to update the baord array when new cells are clicked*/
+    board[board.findIndex((element) => element === `cell-${cellNumber}`)] = this.player;
+    console.log(`This is the board ${board}`);
   }
 }
-
-// const myObject = newCell (true, 0, player-1)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This right now does nothing usefull to the actual project. It takes all the ids cells from the html and save them in an array but thats all
@@ -66,12 +63,11 @@ document.querySelectorAll(".game-cell").forEach((element) => {
     console.log(`clicked on ${element.id}`);
     // gets the id number
     let idNumber = element.id[element.id.length - 1];
-    // creates Object
-    const choosenCell = new Cell(true, idNumber, "player-1");
-    choosenCell.makeMove();
+    // creates player Object and picks the cell after clicking on it on the DOM. This right now is hardcoded because there is no switching between players states logic
+    const player1 = new Player("player1", "x");
+    player1.createCell(true, idNumber, "player1", "X");
     // Updates the chosen cell on the DOM
-    document.getElementById(`cell-${idNumber}`).innerText = choosenCell.player;
-    // gameCellsIds[0] = "player-1";
+    document.getElementById(`cell-${idNumber}`).innerText = player1.symbol;
   });
 });
 
