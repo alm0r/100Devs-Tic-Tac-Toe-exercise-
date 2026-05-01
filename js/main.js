@@ -14,7 +14,7 @@ console.log("main script working");
 let board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
 
 // This let playerWins = false; for now works as a global variable to determine the outcome of thw switch statement inside checkWinCon()
-// but is unnecesary (and kind of reduntand)
+// but is unnecesary (and kind of reduntand) and could be replaced byt simply using a return true inside the switch
 // I think its use depends on which kind logic we end up using for the switching between players, but its is posible to make checkWinCon() to simply return
 // a boolean (as i tested in the first case with return true) and then simply check if player1.checWinCon() is returned true or false instead of checking the playerWinds variable
 // i will leave for now because its the first iteration and i think is easy and simpler to understand
