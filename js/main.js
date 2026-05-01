@@ -108,7 +108,7 @@ document.querySelectorAll(".game-cell").forEach((element) => {
     const player1 = new Player("player1", "x");
     player1.createCell(true, idNumber, "player1", "X");
     player1.checkWinCon();
-    // If
+    // debuggin if its returning true
     // console.log(player1.checkWinCon());
     //
     // Updates the chosen cell on the DOM
