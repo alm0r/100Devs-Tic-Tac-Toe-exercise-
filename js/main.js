@@ -38,7 +38,8 @@ class Player {
     // console.log(`This is the board after choosing a new cell ${board}`);
   }
 
-  // DiSABLED BECAUSE I DONT WANT IT TO GET REMOVE WHEN PULLING
+  // This now returns a boolean (true) when the winning condition is met, which is later used inside the main gameInit() function to check if a move is a wiining move.
+  // I thought it was better to have that logic outside this function to keep it simply
   checkWinCon() {
     switch (true) {
       case board[0] === this.player && board[1] === this.player && board[2] === this.player:
