@@ -37,49 +37,46 @@ class Player {
     board[board.findIndex((element) => element === `cell-${cellNumber}`)] = this.player;
     // console.log(`This is the board after choosing a new cell ${board}`);
   }
-  // compares all the posible winning conditions and either updates playerWins variable. This will allow to use that variable later as war to exit the game running loop
-  // with a simple if statement (if playerWins = false =>  gameBeingPlayed = false === game loop ends)
-  // Also this whole logic can be refactorized in a more cleaner and elegant way using array destructuring and a for of loop, but it pointed to me by Claude
-  // when asking for somethign else and i prefer not to use it
-  checkWinCon() {
-    switch ((playerWins = true)) {
-      case board[0] === this.player && board[1] === this.player && board[2] === this.player:
-        console.log(`${this.player} wins`);
-        playerWins = true;
-        return true;
-        break;
-      case board[3] === this.player && board[4] === this.player && board[5] === this.player:
-        console.log(`${this.player} wins`);
-        playerWins = true;
-        break;
-      case board[6] === this.player && board[7] === this.player && board[8] === this.player:
-        console.log(`${this.player} wins`);
-        playerWins = true;
-        break;
-      case board[0] === this.player && board[3] === this.player && board[6] === this.player:
-        console.log(`${this.player} wins`);
-        playerWins = true;
-        break;
-      case board[1] === this.player && board[4] === this.player && board[7] === this.player:
-        console.log(`${this.player} wins`);
-        playerWins = true;
-        break;
-      case board[2] === this.player && board[5] === this.player && board[8] === this.player:
-        console.log(`${this.player} wins`);
-        playerWins = true;
-        break;
-      case board[0] === this.player && board[4] === this.player && board[8] === this.player:
-        console.log(`${this.player} wins`);
-        playerWins = true;
-        break;
-      case board[2] === this.player && board[4] === this.player && board[6] === this.player:
-        console.log(`${this.player} wins`);
-        playerWins = true;
-        break;
-      default:
-        playerWins = false;
-    }
-  }
+
+  // DiSABLED BECAUSE I DONT WANT IT TO GET REMOVE WHEN PULLING
+  // checkWinCon() {
+  //   switch (true) {
+  //     case board[0] === this.player && board[1] === this.player && board[2] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[3] === this.player && board[4] === this.player && board[5] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[6] === this.player && board[7] === this.player && board[8] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[0] === this.player && board[3] === this.player && board[6] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[1] === this.player && board[4] === this.player && board[7] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[2] === this.player && board[5] === this.player && board[8] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[0] === this.player && board[4] === this.player && board[8] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[2] === this.player && board[4] === this.player && board[6] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     default:
+  //       return false;
+  //   }
+  // }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,25 +102,20 @@ function gameInit() {
       // gets the id number
       let idNumber = element.id[element.id.length - 1];
       // creates player Object and picks the cell after clicking on it on the DOM. This right now is hardcoded because there is no switching between players states logic
-      const choosenPlayer = new Player(
-        players[turn % players.length][0],
-        players[turn % players.length][1],
-      ); /*Replaced player1 and x for array of players created earlier, turn will change and shift the array and wrap around once it exceeds its length*/
+      const choosenPlayer = new Player(players[turn % players.length][0], players[turn % players.length][1]);
 
-      choosenPlayer.createCell(true, idNumber);
-      choosenPlayer.checkWinCon();
-      // debuggin if its returning true
-      // console.log(player1.checkWinCon());
-      //
-      // Updates the chosen cell on the DOM
-      // Turns out there was a bug that allowed to overdraw a cell whith a new piece from another player, duh
-      // This if statements prevents that by allowing only to dry on the DOM when a cell is empty has no other content
-      // Also blocks the player turn untill he chooses a correct cell
+      // Updates the chosen cell on the DOM and blocks the player turn untill he chooses a correct cell
       if (document.getElementById(`cell-${idNumber}`).innerText === "") {
         document.getElementById(`cell-${idNumber}`).innerText = choosenPlayer.symbol;
-        turn += 1; /*to shift player array*/
+        // Next turn
+        turn += 1;
       } else {
         console.log(`Try another cell, this one is already in use`);
+      }
+      // Cheks if the choosen cell makes matches the game winning condition
+      choosenPlayer.createCell(true, idNumber);
+      if (choosenPlayer.checkWinCon() === true) {
+        console.log(`Congrats ${choosenPlayer.player}, you win`);
       }
     });
   });
