@@ -20,6 +20,8 @@ let players = [
   ["player2", "O"],
 ];
 
+let playerWins = false;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Players are cllases following OOP design
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,11 +31,11 @@ class Player {
     this.player = player;
     this.symbol = playerSymbol;
   }
-  createCell(bool, cellNumber, player, playerSymbol) {
+  createCell(bool, cellNumber) {
     console.log(`A new piece was put on square ${cellNumber} by ${this.player} with the ${this.symbol} symbol`);
-    //     /*Added this to update the baord array when new cells are clicked*/
+    // Added this to update the baord array when new cells are clicked*/
     board[board.findIndex((element) => element === `cell-${cellNumber}`)] = this.player;
-    console.log(`This is the board ${board}`);
+    // console.log(`This is the board after choosing a new cell ${board}`);
   }
   // compares all the posible winning conditions and either updates playerWins variable. This will allow to use that variable later as war to exit the game running loop
   // with a simple if statement (if playerWins = false =>  gameBeingPlayed = false === game loop ends)
@@ -103,18 +105,26 @@ function gameInit() {
       // gets the id number
       let idNumber = element.id[element.id.length - 1];
       // creates player Object and picks the cell after clicking on it on the DOM. This right now is hardcoded because there is no switching between players states logic
-      const player1 = new Player(
+      const choosenPlayer = new Player(
         players[turn % players.length][0],
         players[turn % players.length][1],
       ); /*Replaced player1 and x for array of players created earlier, turn will change and shift the array and wrap around once it exceeds its length*/
-      turn += 1; /*to shift player array*/
-      player1.createCell(true, idNumber);
-      player1.checkWinCon();
+
+      choosenPlayer.createCell(true, idNumber);
+      choosenPlayer.checkWinCon();
       // debuggin if its returning true
       // console.log(player1.checkWinCon());
       //
       // Updates the chosen cell on the DOM
-      document.getElementById(`cell-${idNumber}`).innerText = player1.symbol;
+      // Turns out there was a bug that allowed to overdraw a cell whith a new piece from another player, duh
+      // This if statements prevents that by allowing only to dry on the DOM when a cell is empty has no other content
+      // Also blocks the player turn untill he chooses a correct cell
+      if (document.getElementById(`cell-${idNumber}`).innerText === "") {
+        document.getElementById(`cell-${idNumber}`).innerText = choosenPlayer.symbol;
+        turn += 1; /*to shift player array*/
+      } else {
+        console.log(`Try another cell, this one is already in use`);
+      }
     });
   });
 }
@@ -168,8 +178,6 @@ document.querySelectorAll(".game-cell").forEach((element) => {
 // I think its use depends on which kind logic we end up using for the switching between players, but its is posible to make checkWinCon() to simply return
 // a boolean (as i tested in the first case with return true) and then simply check if player1.checWinCon() is returned true or false instead of checking the playerWinds variable
 // i will leave for now because its the first iteration and i think is easy and simpler to understand
-
-let playerWins = false;
 
 // This works by using the global variable let gameBeingPlayed = true; in a while loop. The while loop switches between 2 states determined byt 2 other global variables
 // let playerOneTurn = true; and // let playerTwoTurn = false; and alternates between them. While one of the if statements is true, it runs, and at then end, it becames false and changes
