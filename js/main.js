@@ -102,6 +102,7 @@ function gameInit() {
   document.querySelectorAll(".game-cell").forEach((element) => {
     element.innerText = "";
   });
+  // Creates new Cell / Makes a player Move
   document.querySelectorAll(".game-cell").forEach((element) => {
     element.addEventListener("click", () => {
       // Creates a new board variable
