@@ -10,7 +10,7 @@ console.log("main script working");
 // Check winning condition (when a player gets the 3 cells).
 
 /*Added to keep track of the updated cells*/
-let board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
+// let board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
 
 //Introduced to keep track of the turn but alsoto switch between players, I think it will also be helpful for declaring a stalemate since I am pretty sure after 9 turns if no one has won the game its supposed to start over.
 let turn = 0;
@@ -39,44 +39,44 @@ class Player {
   }
 
   // DiSABLED BECAUSE I DONT WANT IT TO GET REMOVE WHEN PULLING
-  // checkWinCon() {
-  //   switch (true) {
-  //     case board[0] === this.player && board[1] === this.player && board[2] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
+  checkWinCon() {
+    switch (true) {
+      case board[0] === this.player && board[1] === this.player && board[2] === this.player:
+        console.log(`${this.player} wins`);
+        return true;
 
-  //     case board[3] === this.player && board[4] === this.player && board[5] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
+      case board[3] === this.player && board[4] === this.player && board[5] === this.player:
+        console.log(`${this.player} wins`);
+        return true;
 
-  //     case board[6] === this.player && board[7] === this.player && board[8] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
+      case board[6] === this.player && board[7] === this.player && board[8] === this.player:
+        console.log(`${this.player} wins`);
+        return true;
 
-  //     case board[0] === this.player && board[3] === this.player && board[6] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
+      case board[0] === this.player && board[3] === this.player && board[6] === this.player:
+        console.log(`${this.player} wins`);
+        return true;
 
-  //     case board[1] === this.player && board[4] === this.player && board[7] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
+      case board[1] === this.player && board[4] === this.player && board[7] === this.player:
+        console.log(`${this.player} wins`);
+        return true;
 
-  //     case board[2] === this.player && board[5] === this.player && board[8] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
+      case board[2] === this.player && board[5] === this.player && board[8] === this.player:
+        console.log(`${this.player} wins`);
+        return true;
 
-  //     case board[0] === this.player && board[4] === this.player && board[8] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
+      case board[0] === this.player && board[4] === this.player && board[8] === this.player:
+        console.log(`${this.player} wins`);
+        return true;
 
-  //     case board[2] === this.player && board[4] === this.player && board[6] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
+      case board[2] === this.player && board[4] === this.player && board[6] === this.player:
+        console.log(`${this.player} wins`);
+        return true;
 
-  //     default:
-  //       return false;
-  //   }
-  // }
+      default:
+        return false;
+    }
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,11 +92,19 @@ document.getElementById("game-start-button").addEventListener("click", () => {
 
 document.getElementById("game-reset-button").addEventListener("click", () => {
   console.log("Game resets but there is no logic yet");
+  resetGame();
 });
 
 function gameInit() {
+  // Creates a new board when the start button is clicked,making it also work as a Reset bvutton
+  board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
+  document.querySelectorAll(".game-cell").forEach((element) => {
+    element.innerText = "";
+  });
   document.querySelectorAll(".game-cell").forEach((element) => {
     element.addEventListener("click", () => {
+      // Creates a new board variable
+
       // checks if its working on the console, debugging purpose
       console.log(`clicked on ${element.id}`);
       // gets the id number
@@ -120,6 +128,15 @@ function gameInit() {
     });
   });
 }
+
+//Resetting both the board and the cells for now, I think we could defniteley make it so the cell just follow what's ont he board to centralize it though. WOrking on it.
+
+// function resetGame() {
+//   board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
+//   document.querySelectorAll(".game-cell").forEach((element) => {
+//     element.innerText = "";
+//   });
+// }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This right now does nothing usefull to the actual project.
