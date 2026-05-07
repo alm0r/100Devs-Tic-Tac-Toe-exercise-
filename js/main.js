@@ -47,58 +47,87 @@ let gameBeingPlayed = false;
 // Players are cllases following OOP design
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
+// const game = {
+//   board: ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"],
+//   turn: 0,
+//   resetBoardDom: function () {
+//     document.querySelectorAll(".game-cell").forEach((element) => {
+//       element.innerText = "";
+//     });
+//   },
+// };
+
 class Player {
   constructor(player, playerSymbol) {
     this.player = player;
     this.symbol = playerSymbol;
   }
   createCell(bool, cellNumber) {
-    console.log(`A new piece was put on square ${cellNumber} by ${this.player} with the ${this.symbol} symbol`);
+    console.log(`A new piece was put on cell ${cellNumber} by ${this.player} with the ${this.symbol} symbol`);
     // Added this to update the baord array when new cells are clicked*/
     board[board.findIndex((element) => element === `cell-${cellNumber}`)] = this.player;
     // console.log(`This is the board after choosing a new cell ${board}`);
   }
-
-  // This now returns a boolean (true) when the winning condition is met, which is later used inside the main gameInit() function to check if a move is a wiining move.
-  // I thought it was better to have that logic outside this function to keep it simply
+  //New logic for check if the winning condition is met
   checkWinCon() {
-    switch (true) {
-      case board[0] === this.player && board[1] === this.player && board[2] === this.player:
-        console.log(`${this.player} wins`);
-        return true;
+    const winningCombinations = [
+      [[0], [1], [2]],
+      [[3], [4], [5]],
+      [[6], [7], [8]],
+      [[0], [3], [6]],
+      [[1], [4], [7]],
+      [[2], [5], [8]],
+      [[0], [4], [8]],
+      [[2], [4], [6]],
+    ];
 
-      case board[3] === this.player && board[4] === this.player && board[5] === this.player:
-        console.log(`${this.player} wins`);
+    for (const [a, b, c] of winningCombinations) {
+      console.log(board);
+      if (board[a] === this.player && board[b] === this.player && board[c] === this.player) {
         return true;
-
-      case board[6] === this.player && board[7] === this.player && board[8] === this.player:
-        console.log(`${this.player} wins`);
-        return true;
-
-      case board[0] === this.player && board[3] === this.player && board[6] === this.player:
-        console.log(`${this.player} wins`);
-        return true;
-
-      case board[1] === this.player && board[4] === this.player && board[7] === this.player:
-        console.log(`${this.player} wins`);
-        return true;
-
-      case board[2] === this.player && board[5] === this.player && board[8] === this.player:
-        console.log(`${this.player} wins`);
-        return true;
-
-      case board[0] === this.player && board[4] === this.player && board[8] === this.player:
-        console.log(`${this.player} wins`);
-        return true;
-
-      case board[2] === this.player && board[4] === this.player && board[6] === this.player:
-        console.log(`${this.player} wins`);
-        return true;
-
-      default:
-        return false;
+      }
     }
   }
+
+  //  OLD LOGIC
+  // checkWinCon() {
+  //   switch (true) {
+  //     case board[0] === this.player && board[1] === this.player && board[2] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[3] === this.player && board[4] === this.player && board[5] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[6] === this.player && board[7] === this.player && board[8] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[0] === this.player && board[3] === this.player && board[6] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[1] === this.player && board[4] === this.player && board[7] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[2] === this.player && board[5] === this.player && board[8] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[0] === this.player && board[4] === this.player && board[8] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     case board[2] === this.player && board[4] === this.player && board[6] === this.player:
+  //       console.log(`${this.player} wins`);
+  //       return true;
+
+  //     default:
+  //       return false;
+  //   }
+  // }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,6 +161,7 @@ function gameInit() {
         console.log(`clicked on ${element.id}`);
         // gets the id number
         let idNumber = element.id[element.id.length - 1];
+        // console.log(idNumber);
         // creates player Object and picks the cell after clicking on it on the DOM. This right now is hardcoded because there is no switching between players states logic
         const choosenPlayer = new Player(players[turn % players.length][0], players[turn % players.length][1]);
 
