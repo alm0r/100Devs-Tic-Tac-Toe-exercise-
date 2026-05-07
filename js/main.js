@@ -30,10 +30,6 @@
 
 console.log("main script working");
 
-////////////////////
-// TO DO
-//////////////////
-
 //Introduced to keep track of the turn but alsoto switch between players, I think it will also be helpful for declaring a stalemate since I am pretty sure after 9 turns if no one has won the game its supposed to start over.
 // let turn = 0;
 //This is just to list the players and their symbols, this will be used to feed to the player object as arguments.
@@ -45,7 +41,7 @@ let players = [
 // Works like a switch to enable/disable the logic whenever the game is been played or not
 let gameBeingPlayed = false;
 ///////////////////////////////////////////////////////////////////////////////////////////////
-// Players are cllases following OOP design
+// Players are clases following OOP design, so its the game Object that keeps track of the board
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 const game = {
@@ -147,11 +143,14 @@ function gameInit() {
   // Creates a new board when the start button is clicked,making it also work as a Reset bvutton
   game.turn = 0;
   game.baord;
+  game.resetBoardDom();
+
+  // OLD LOGIC, KEEPING IT HERE IN CASE NEW LOGIC BREAKS SOMETHING
   // turn = 0;
   // game.board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
-  document.querySelectorAll(".game-cell").forEach((element) => {
-    element.innerText = "";
-  });
+  // document.querySelectorAll(".game-cell").forEach((element) => {
+  //   element.innerText = "";
+  // });
 
   // Creates new Cell / Makes a player Move
 
@@ -163,7 +162,7 @@ function gameInit() {
         console.log(`clicked on ${element.id}`);
         // gets the id number
         let idNumber = element.id[element.id.length - 1];
-        // console.log(idNumber);
+
         // creates player Object and picks the cell after clicking on it on the DOM. This right now is hardcoded because there is no switching between players states logic
         const choosenPlayer = new Player(players[game.turn % players.length][0], players[game.turn % players.length][1]);
 
