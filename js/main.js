@@ -35,27 +35,28 @@ console.log("main script working");
 //////////////////
 
 //Introduced to keep track of the turn but alsoto switch between players, I think it will also be helpful for declaring a stalemate since I am pretty sure after 9 turns if no one has won the game its supposed to start over.
-let turn = 0;
+// let turn = 0;
 //This is just to list the players and their symbols, this will be used to feed to the player object as arguments.
 let players = [
   ["player1", "X"],
   ["player2", "O"],
 ];
 
+// Works like a switch to enable/disable the logic whenever the game is been played or not
 let gameBeingPlayed = false;
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Players are cllases following OOP design
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// const game = {
-//   board: ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"],
-//   turn: 0,
-//   resetBoardDom: function () {
-//     document.querySelectorAll(".game-cell").forEach((element) => {
-//       element.innerText = "";
-//     });
-//   },
-// };
+const game = {
+  board: ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"],
+  turn: 0,
+  resetBoardDom: function () {
+    document.querySelectorAll(".game-cell").forEach((element) => {
+      element.innerText = "";
+    });
+  },
+};
 
 class Player {
   constructor(player, playerSymbol) {
@@ -65,7 +66,7 @@ class Player {
   createCell(bool, cellNumber) {
     console.log(`A new piece was put on cell ${cellNumber} by ${this.player} with the ${this.symbol} symbol`);
     // Added this to update the baord array when new cells are clicked*/
-    board[board.findIndex((element) => element === `cell-${cellNumber}`)] = this.player;
+    game.board[game.board.findIndex((element) => element === `cell-${cellNumber}`)] = this.player;
     // console.log(`This is the board after choosing a new cell ${board}`);
   }
   //New logic for check if the winning condition is met
@@ -82,8 +83,8 @@ class Player {
     ];
 
     for (const [a, b, c] of winningCombinations) {
-      console.log(board);
-      if (board[a] === this.player && board[b] === this.player && board[c] === this.player) {
+      // console.log(board);
+      if (game.board[a] === this.player && game.board[b] === this.player && game.board[c] === this.player) {
         return true;
       }
     }
@@ -143,10 +144,11 @@ document.getElementById("game-start-button").addEventListener("click", () => {
 });
 
 function gameInit() {
-  // if (gameBeingPlayed === false) return;
   // Creates a new board when the start button is clicked,making it also work as a Reset bvutton
-  turn = 0;
-  board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
+  game.turn = 0;
+  game.baord;
+  // turn = 0;
+  // game.board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
   document.querySelectorAll(".game-cell").forEach((element) => {
     element.innerText = "";
   });
@@ -163,13 +165,13 @@ function gameInit() {
         let idNumber = element.id[element.id.length - 1];
         // console.log(idNumber);
         // creates player Object and picks the cell after clicking on it on the DOM. This right now is hardcoded because there is no switching between players states logic
-        const choosenPlayer = new Player(players[turn % players.length][0], players[turn % players.length][1]);
+        const choosenPlayer = new Player(players[game.turn % players.length][0], players[game.turn % players.length][1]);
 
         // Updates the chosen cell on the DOM and blocks the player turn untill he chooses a correct cell
         if (document.getElementById(`cell-${idNumber}`).innerText === "") {
           document.getElementById(`cell-${idNumber}`).innerText = choosenPlayer.symbol;
           // Next turn
-          turn += 1;
+          game.turn += 1;
         } else {
           console.log(`Try another cell, this one is already in use`);
         }
