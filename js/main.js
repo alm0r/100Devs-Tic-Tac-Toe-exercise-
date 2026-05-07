@@ -177,6 +177,7 @@ function gameInit() {
         // Cheks if the choosen cell makes matches the game winning condition
         choosenPlayer.createCell(true, idNumber);
         if (choosenPlayer.checkWinCon() === true) {
+          // When returned true === winning condition is met and therefore the game is over, switching the gamebeingplayer to false
           gameBeingPlayed = false;
           console.log(`Congrats ${choosenPlayer.player}, you win`);
           document.querySelector(".txt-msg").innerText = `Congrats ${choosenPlayer.player}, you win!`;
