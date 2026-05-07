@@ -209,6 +209,7 @@ img {
 .header {
   text-align: center;
   background-color: lightcoral;
+  height: 24rem;
 }
 
 .baord-section {

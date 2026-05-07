@@ -20,7 +20,7 @@ let players = [
   ["player2", "O"],
 ];
 
-let playerWins = false;
+// let playerWins = false;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Players are cllases following OOP design
@@ -91,11 +91,6 @@ document.getElementById("game-start-button").addEventListener("click", () => {
   gameInit();
 });
 
-document.getElementById("game-reset-button").addEventListener("click", () => {
-  console.log("Game resets but there is no logic yet");
-  resetGame();
-});
-
 function gameInit() {
   // Creates a new board when the start button is clicked,making it also work as a Reset bvutton
   board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
@@ -126,6 +121,7 @@ function gameInit() {
       choosenPlayer.createCell(true, idNumber);
       if (choosenPlayer.checkWinCon() === true) {
         console.log(`Congrats ${choosenPlayer.player}, you win`);
+        document.querySelector(".txt-msg").innerText = `Congrats ${choosenPlayer.player}, you win!`;
       }
     });
   });
