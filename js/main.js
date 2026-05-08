@@ -141,15 +141,16 @@ document.getElementById("game-start-button").addEventListener("click", () => {
 
 function gameInit() {
   // Creates a new board when the start button is clicked,making it also work as a Reset bvutton
+
   game.turn = 0;
-  game.baord;
   game.resetBoardDom();
+  game.board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
 
   // OLD LOGIC, KEEPING IT HERE IN CASE NEW LOGIC BREAKS SOMETHING
   // turn = 0;
   // game.board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
   // document.querySelectorAll(".game-cell").forEach((element) => {
-  //   element.innerText = "";
+  // element.innerText = "";
   // });
 
   // Creates new Cell / Makes a player Move
@@ -179,6 +180,7 @@ function gameInit() {
         if (choosenPlayer.checkWinCon() === true) {
           // When returned true === winning condition is met and therefore the game is over, switching the gamebeingplayer to false
           gameBeingPlayed = false;
+
           console.log(`Congrats ${choosenPlayer.player}, you win`);
           document.querySelector(".txt-msg").innerText = `Congrats ${choosenPlayer.player}, you win!`;
         }
