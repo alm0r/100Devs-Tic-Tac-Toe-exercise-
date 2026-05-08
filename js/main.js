@@ -1,37 +1,5 @@
-// =============================================
-// TIC TAC TOE GAME - PROJECT DESCRIPTION
-// =============================================
-// This project implements a classic 3x3 Tic Tac Toe game with the following features:
-//
-// CORE FUNCTIONALITY:
-//   • Two-player local multiplayer game (Player 1 uses X, Player 2 uses O)
-//   • Players take turns clicking on empty cells to place their mark
-//   • Game ends when a player achieves three consecutive marks in any direction
-//     (rows, columns, or diagonals)
-//   • Winning conditions checked for all 8 possible win lines
-//
-// GAMEPLAY FEATURES:
-//   • 3x3 game board with 9 numbered cells (cell-0 through cell-8)
-//   • Turn-based alternation between two players
-//   • Prevents placing marks on already occupied cells
-//   • "Start" button to initialize/reset the game
-//   • Win message displayed when a player wins
-//
-// TECHNICAL STRUCTURE:
-//   • Uses JavaScript OOP pattern with Player class
-//   • Manages game state (turn counter, board array, active game flag)
-//   • Event-driven architecture with click listeners on game cells
-//   • Console logs for debugging and tracking game actions
-//
-// NOTE: Current implementation supports one game session at a time.
-//       Future enhancements could include draw detection, player switch logic,
-//       and reset button functionality.
-// =============================================
-
 console.log("main script working");
 
-//Introduced to keep track of the turn but alsoto switch between players, I think it will also be helpful for declaring a stalemate since I am pretty sure after 9 turns if no one has won the game its supposed to start over.
-// let turn = 0;
 //This is just to list the players and their symbols, this will be used to feed to the player object as arguments.
 let players = [
   ["player1", "X"],
@@ -65,7 +33,7 @@ class Player {
     game.board[game.board.findIndex((element) => element === `cell-${cellNumber}`)] = this.player;
     // console.log(`This is the board after choosing a new cell ${board}`);
   }
-  //New logic for check if the winning condition is met
+  //New logic to check if the winning condition is met
   checkWinCon() {
     const winningCombinations = [
       [[0], [1], [2]],
@@ -85,51 +53,10 @@ class Player {
       }
     }
   }
-
-  //  OLD LOGIC
-  // checkWinCon() {
-  //   switch (true) {
-  //     case board[0] === this.player && board[1] === this.player && board[2] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
-
-  //     case board[3] === this.player && board[4] === this.player && board[5] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
-
-  //     case board[6] === this.player && board[7] === this.player && board[8] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
-
-  //     case board[0] === this.player && board[3] === this.player && board[6] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
-
-  //     case board[1] === this.player && board[4] === this.player && board[7] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
-
-  //     case board[2] === this.player && board[5] === this.player && board[8] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
-
-  //     case board[0] === this.player && board[4] === this.player && board[8] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
-
-  //     case board[2] === this.player && board[4] === this.player && board[6] === this.player:
-  //       console.log(`${this.player} wins`);
-  //       return true;
-
-  //     default:
-  //       return false;
-  //   }
-  // }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Added 2 buttons, each with its own eventListener (altought the reset is just a placeholder for now). The Logic should be easy to implement in the future
-// Now the main logic of the game is contained inside the gameInit() function and its only trigger when the player press "Start"
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // On page load, this waits for a click in order to start the game
@@ -140,20 +67,12 @@ document.getElementById("game-start-button").addEventListener("click", () => {
 });
 
 function gameInit() {
-  // Creates a new board when the start button is clicked,making it also work as a Reset bvutton
-
+  // Creates a new board when the start button is clicked, making it also work as a Reset bvutton
   game.turn = 0;
-  game.resetBoardDom();
   game.board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
+  game.resetBoardDom();
 
-  // OLD LOGIC, KEEPING IT HERE IN CASE NEW LOGIC BREAKS SOMETHING
-  // turn = 0;
-  // game.board = ["cell-0", "cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6", "cell-7", "cell-8"];
-  // document.querySelectorAll(".game-cell").forEach((element) => {
-  // element.innerText = "";
-  // });
-
-  // Creates new Cell / Makes a player Move
+  // Creates new Cell / Makes a player Move whenever a cell is clicked
 
   document.querySelectorAll(".game-cell").forEach((element) => {
     element.addEventListener("click", () => {
@@ -188,17 +107,3 @@ function gameInit() {
     });
   });
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// This right now does nothing usefull to the actual project.
-// It takes all the ids cells from the html and save them in an array but thats all
-// I was thinking maybe i could use them later on for checking the winning condition logic
-///////////////////////////////////////////////////////////////////////////////////////////
-
-const gameCellsIds = [];
-
-document.querySelectorAll(".game-cell").forEach((element) => {
-  gameCellsIds.push(element.id);
-});
-
-///////////////////////////////////////////////////////////////////////////////////////////
